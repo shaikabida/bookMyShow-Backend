@@ -4,33 +4,29 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.List;
 
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name="Movie")
 @Builder
+@Entity
+@Table(name="User")
 @ToString
-public class Movie {
+public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name="name",nullable = false)
     private String name;
+    @Column(name="mobile",nullable = false)
+    private String mobileNumber;
 
-    @Column(name="releaseDate",columnDefinition = "DATE",nullable = false)
-    private LocalDate releaseDate;
 
 
-    //Connecting to other table
-    //This is parent table, as it is having mapped by and cascade type.
-    //Bi directional mapping
-    @OneToMany(mappedBy = "movie",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user",cascade=CascadeType.ALL)    //bi directional mapping
     @JsonIgnore
-    private List<ShowTime> shows;
+    private List<TicketEntity> listOfTickets;
 }

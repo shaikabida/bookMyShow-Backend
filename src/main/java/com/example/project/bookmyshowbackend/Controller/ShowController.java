@@ -18,7 +18,7 @@ public class ShowController {
     ShowServiceImplement showServiceImplement;
 
     @PostMapping("/add")
-    public ResponseEntity addShow(@RequestBody ShowEntryDto showEntryDto){
+    public ResponseEntity addShow(@RequestBody() ShowEntryDto showEntryDto){
         ShowResponseDto showResponseDto=showServiceImplement.addShow(showEntryDto);
         log.info("Thw showResponseDto is ",showResponseDto);
         return new ResponseEntity("Added Show successfully", HttpStatus.CREATED);

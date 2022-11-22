@@ -18,7 +18,7 @@ import java.util.List;
 @EntityListeners(value={AuditingEntityListener.class})
 @Table(name="Ticket")
 @ToString
-public class Ticket {
+public class TicketEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -36,16 +36,16 @@ public class Ticket {
     @ManyToOne
     @JoinColumn
     @JsonIgnore
-    private User user;
+    private UserEntity user;
 
     //show entity
     @ManyToOne
     @JsonIgnore
     @JoinColumn
-    private ShowTime show;
+    private ShowEntity show;
 
     //showSeat entity
     @OneToMany(mappedBy = "ticket",cascade=CascadeType.ALL)    //bi directional mapping
     @JsonIgnore
-    private List<ShowSeats> seats;
+    private List<ShowSeatsEntity> seats;
 }

@@ -19,9 +19,8 @@ import java.util.List;
 @Entity
 @Table(name="Show")
 @Builder
-@ToString
 @EntityListeners(value = {AuditingEntityListener.class})
-public class ShowTime {
+public class ShowEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -43,17 +42,17 @@ public class ShowTime {
 
     @JsonIgnore
     @ManyToOne
-    private Movie movie;
+    private MovieEntity movie;
 
     @JsonIgnore
     @ManyToOne
-    private Theatre theatre;
+    private TheatreEntity theatre;
 
     @JsonIgnore
     @OneToMany(mappedBy = "show",cascade = CascadeType.ALL)
-    private List<Ticket> ticekts;
+    private List<TicketEntity> ticekts;
 
     @JsonIgnore
     @OneToMany(mappedBy = "show",cascade = CascadeType.ALL)
-    private List<ShowSeats> seats;
+    private List<ShowSeatsEntity> seats;
 }

@@ -34,36 +34,38 @@ public class ShowServiceImplement implements ShowService {
 
     @Override
     public ShowResponseDto addShow(ShowEntryDto showEntryDto) {
-        ShowTime show= ShowConvertor.convertDtoToEntity(showEntryDto);
+        ShowEntity show= ShowConvertor.convertDtoToEntity(showEntryDto);
 
-        Movie movie = movieRepository.findById(showEntryDto.getMovieResponseDto().getId()).get();
-        Theatre theatre=theatreRepository.findById(showEntryDto.getTheatreResponseDto().getId()).get();
+        MovieEntity movie = movieRepository.findById(showEntryDto.getMovieResponseDto().getId()).get();
+        TheatreEntity theatre=theatreRepository.findById(showEntryDto.getTheatreResponseDto().getId()).get();
 
         show.setMovie(movie);
         show.setTheatre(theatre);
-
-        generateShowSeats(theatre.getThreatreSeats(),show);
         show=showRepository.save(show);
+        generateShowSeats(theatre.getThreatreSeats(),show);
+
         ShowResponseDto showResponseDto=ShowConvertor.convertEntityToDto(show,showEntryDto);
         return showResponseDto;
     }
-    public void generateShowSeats(List<TheatreSeats> theatreSeats, ShowTime show){
-        List<ShowSeats> showSeats= new ArrayList<>();
+    public void generateShowSeats(List<TheatreSeatsEntity> theatreSeats, ShowEntity show){
+        List<ShowSeatsEntity> showSeats= new ArrayList<>();
 
         log.info("The list of theatre entity seats");
-        for(TheatreSeats temp:theatreSeats){
-            showSeats.add(generateShowSeatsEntity(temp,show));
+        for(TheatreSeatsEntity temp:theatreSeats){
+            ShowSeatsEntity showSeatsEntity=ShowSeatsEntity.builder().seatNo(temp.getSeatNumber())
+                            .seatType(temp.getSeatType()).rate(temp.getRate()).build();
+            showSeats.add(showSeatsEntity);
+        }
+        for(ShowSeatsEntity showSeatsEntity:showSeats){
+            showSeatsEntity.setShow(show);
         }
         showSeatsRepository.saveAll(showSeats);
-    }
-    public ShowSeats generateShowSeatsEntity(TheatreSeats theatreSeats, ShowTime show){
-        return ShowSeats.builder().rate(theatreSeats.getRate()).seatNo(theatreSeats.getSeatNumber())
-                .seatType(theatreSeats.getSeatType()).show(show).build();
+        show.setSeats(showSeats);
     }
 
     @Override
     public ShowResponseDto getShow(int id) {
-        ShowTime show=showRepository.findById(id).get();
+        ShowEntity show=showRepository.findById(id).get();
         //showEntry
         ShowEntryDto showEntryDto=null;
         ShowResponseDto showDto=ShowConvertor.convertEntityToDto(show,showEntryDto);

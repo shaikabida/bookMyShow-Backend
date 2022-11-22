@@ -16,7 +16,7 @@ import java.util.Date;
 @Table(name="ShowSeats")
 @Builder
 @ToString
-public class ShowSeats {
+public class ShowSeatsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -40,9 +40,9 @@ public class ShowSeats {
 
     @ManyToOne
     @JsonIgnore
-    private Ticket ticket;
+    private TicketEntity ticket;
 
     @ManyToOne
     @JsonIgnore
-    private ShowTime show;
+    private ShowEntity show;
 }

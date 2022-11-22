@@ -1,9 +1,9 @@
 package com.example.project.bookmyshowbackend.Repository;
 
-import com.example.project.bookmyshowbackend.Models.User;
+import com.example.project.bookmyshowbackend.Models.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends JpaRepository<User,Integer> {
+public interface UserRepository extends JpaRepository<UserEntity,Integer> {
 }

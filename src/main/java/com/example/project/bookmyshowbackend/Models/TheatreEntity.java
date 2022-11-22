@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Setter
@@ -15,8 +14,7 @@ import java.util.List;
 @Entity
 @Table(name="Theatre")
 @Builder
-@ToString
-public class Theatre {
+public class TheatreEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -36,9 +34,9 @@ public class Theatre {
 
     @OneToMany(mappedBy = "theatre",cascade=CascadeType.ALL)    //bi directional mapping
     @JsonIgnore
-    private List<ShowTime> listOfShows;
+    private List<ShowEntity> listOfShows;
 
     @OneToMany(mappedBy = "theatre",cascade=CascadeType.ALL)    //bi directional mapping
     @JsonIgnore
-    private List<TheatreSeats> threatreSeats;
+    private List<TheatreSeatsEntity> threatreSeats;
 }

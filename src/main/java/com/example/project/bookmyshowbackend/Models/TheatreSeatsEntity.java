@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Table(name="TheatreSeats")
 @Builder
 @ToString
-public class TheatreSeats {
+public class TheatreSeatsEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,6 +33,6 @@ public class TheatreSeats {
     @ManyToOne
     @JsonIgnore
     @JoinColumn
-    private Theatre theatre;
+    private TheatreEntity theatre;
 
 }
