@@ -19,9 +19,9 @@ public class TicketController {
     TicketServiceImplement ticketServiceImplement;
 
     @PostMapping("/add")
-    public ResponseEntity addTicket(@RequestBody()BookTicketRequestDto bookTicketRequestDto){
+    public ResponseEntity<TicketResponseDto> addTicket(@RequestBody()BookTicketRequestDto bookTicketRequestDto){
         TicketResponseDto ticketResponseDto=ticketServiceImplement.bookTicket(bookTicketRequestDto);
-        return new ResponseEntity<>("Added Ticket Successfully", HttpStatus.CREATED);
+        return new ResponseEntity<>(ticketResponseDto, HttpStatus.CREATED);
     }
 
     @GetMapping("/get/{id}")

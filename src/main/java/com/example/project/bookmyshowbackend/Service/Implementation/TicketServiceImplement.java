@@ -74,6 +74,7 @@ public class TicketServiceImplement implements TicketService {
         }
         ticket.setAmount(amount);
         ticket.setAllotedSeats(convertListOfSeatsToString(availableSeats));
+        ticket.setBookedAt(new Date());
 
         user.getListOfTickets().add(ticket);
         show.getTicekts().add(ticket);

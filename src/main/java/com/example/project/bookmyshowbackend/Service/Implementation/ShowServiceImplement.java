@@ -1,8 +1,12 @@
 package com.example.project.bookmyshowbackend.Service.Implementation;
 
+import com.example.project.bookmyshowbackend.Convertor.MovieConvertor;
 import com.example.project.bookmyshowbackend.Convertor.ShowConvertor;
+import com.example.project.bookmyshowbackend.Convertor.TheatreConvertor;
 import com.example.project.bookmyshowbackend.DTO.EntryDTO.ShowEntryDto;
+import com.example.project.bookmyshowbackend.DTO.ResponseDTO.MovieResponseDto;
 import com.example.project.bookmyshowbackend.DTO.ResponseDTO.ShowResponseDto;
+import com.example.project.bookmyshowbackend.DTO.ResponseDTO.TheatreResponseDto;
 import com.example.project.bookmyshowbackend.Models.*;
 import com.example.project.bookmyshowbackend.Repository.MovieRepository;
 import com.example.project.bookmyshowbackend.Repository.ShowRepository;
@@ -66,8 +70,12 @@ public class ShowServiceImplement implements ShowService {
     @Override
     public ShowResponseDto getShow(int id) {
         ShowEntity show=showRepository.findById(id).get();
+        MovieEntity movie=movieRepository.findById(show.getMovie().getId()).get();
+        TheatreEntity theatre=theatreRepository.findById(show.getTheatre().getId()).get();
+        MovieResponseDto movieResponseDto= MovieConvertor.convertEntityToDto(movie);
+        TheatreResponseDto theatreResponseDto= TheatreConvertor.convertEntitytoDto(theatre);
         //showEntry
-        ShowEntryDto showEntryDto=null;
+        ShowEntryDto showEntryDto=ShowEntryDto.builder().showDate(show.getShowDate()).showTime(show.getShowTime()).movieResponseDto(movieResponseDto).theatreResponseDto(theatreResponseDto).build();
         ShowResponseDto showDto=ShowConvertor.convertEntityToDto(show,showEntryDto);
         return showDto;
     }

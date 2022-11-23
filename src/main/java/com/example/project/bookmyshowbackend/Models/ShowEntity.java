@@ -2,6 +2,8 @@ package com.example.project.bookmyshowbackend.Models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -17,7 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="Show")
+@Table(name="Shows")
 @Builder
 @EntityListeners(value = {AuditingEntityListener.class})
 public class ShowEntity {
@@ -30,11 +32,13 @@ public class ShowEntity {
     @Column(name="showTime",columnDefinition = "TIME",nullable = false)
     private LocalTime showTime;
 
+    @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
     @Column(name="createdDate")
     private Date createdAt;
 
+    @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @LastModifiedDate
     @Column(name="updatedDate")
